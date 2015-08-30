@@ -1,8 +1,8 @@
 #ifndef STRUCT_LENSES_H
 #define STRUCT_LENSES_H
 
-#include "../lenses.h"
-#include "../autolens.h"
+#include <lenses.h>
+#include <autolens.h>
 
 #include "address.h"
 #include "person.h"

@@ -15,6 +15,7 @@ struct Car
     std::list<std::string> accessories;
 };
 
+
 } // namespace sample
 
 

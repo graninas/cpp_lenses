@@ -6,7 +6,7 @@
 namespace lenses
 {
 
-#define SETTER(A, B, b) [](const A& a, const B& replacer) { A newA = a; newA.b = replacer; return newA; }
+#define SETTER(A, B, b) [](A a, const B& replacer) { a.b = replacer; return a; }
 
 #define modify(Type, expr) std::function<Type(Type)>([](Type _value) { return (expr); })
 
@@ -32,6 +32,7 @@ Value over(const ST& st, const Value& value, const std::function<Focus(Focus)>& 
 {
     return evalLens(st, value, variator);
 }
+
 
 } // namespace lenses
 

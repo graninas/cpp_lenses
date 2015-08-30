@@ -3,24 +3,26 @@
 
 #include <functional>
 
-#include "identity.h"
+#include <identity.h>
 
 namespace lenses
 {
+using namespace f_core;
 
-template <typename Value, typename Focus, template <typename> class Container = Identity>
+// TODO: a better generic lenses?
+//template <typename Value, typename Focus, template <typename> class Container = Identity>
+template <typename Value, typename Focus>
 struct Lens
 {
     std::function<Focus(Value)> getter;
-    std::function<Value(Value&, Focus)> setter;
+    std::function<Value(Value, Focus)> setter;
 
     // TODO: this seems a right way to generalize of different lenses applying.
-    Value apply(const Value& value, const std::function<Focus(Focus)>& variator) const
+    Value apply(Value value, const std::function<Focus(Focus)>& variator) const
     {
-        Value z1 = value;
         auto z2 = getter(value);
         z2 = variator(z2);
-        return setter(z1, z2);
+        return setter(value, z2);
     }
 };
 
@@ -54,6 +56,6 @@ Lens<Focus, Id> idL()
     return l;
 }
 
-}
+} // namespace lenses
 
 #endif // LENS_H

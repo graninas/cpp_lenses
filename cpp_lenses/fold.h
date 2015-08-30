@@ -11,6 +11,7 @@
 namespace lenses
 {
 
+/*
 template <typename Folded, typename Contained>
 struct Fold
 {
@@ -58,9 +59,13 @@ std::vector<Zoomed1> toVectorOf(const FoldStack<Folded, Contained, Zoomed1>& sta
 }
 
 // TODO: remove explicit containers `vector` etc.
+
+
+
+
 template <typename Folded, typename Contained, typename Zoomed1>
 std::list<Zoomed1> toListOf(const FoldStack<Folded, Contained, Zoomed1>& stack,
-                              const std::vector<Contained>& items)
+                            const std::vector<Contained>& items)
 {
     std::list<Zoomed1> zoomedItems;
     std::for_each(items.cbegin(), items.cend(), [&](const Contained& it)
@@ -71,6 +76,8 @@ std::list<Zoomed1> toListOf(const FoldStack<Folded, Contained, Zoomed1>& stack,
 
     return zoomedItems;
 }
+*/
+
 
 }
 

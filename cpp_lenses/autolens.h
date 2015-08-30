@@ -18,7 +18,6 @@ namespace lenses
     return lens<A, B> ( GETTER(A, member) \
                       , SETTER(A, B, member)); }
 
-
 } // namespace lenses
 
 

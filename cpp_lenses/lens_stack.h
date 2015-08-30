@@ -30,8 +30,7 @@ struct LS
 };
 
 template<typename L1, typename... Tail>
-struct LS<L1, Tail...>
-    : LS<Tail...>
+struct LS<L1, Tail...> : LS<Tail...>
 {
     typedef LS<Tail...> base_type;
     typedef L1          value_type;
@@ -73,18 +72,17 @@ struct LS<L1, Tail...>
     }
 
     template <typename H1, typename Focus>
-        H1 apply(const H1& value, const std::function<Focus(Focus)>& variator) const
+        H1 apply(H1 value, const std::function<Focus(Focus)>& variator) const
     {
-        H1 z1 = value;
         auto z2 = m_lens.getter(value);
         z2 = base.apply(z2, variator);
-        return m_lens.setter(z1, z2);
+        return m_lens.setter(value, z2);
     }
 
     template <typename Contained, typename Focus>
-        std::vector<Contained> apply(const std::vector<Contained>& val, const std::function<Focus(Focus)>& variator) const
+        std::vector<Contained> apply(std::vector<Contained> container,
+                                     const std::function<Focus(Focus)>& variator) const
     {
-        auto container = val;
         for (auto it = container.begin(); it != container.end(); ++it)
         {
             *it = base.apply(*it, variator);
@@ -93,9 +91,9 @@ struct LS<L1, Tail...>
     }
 
     template <typename Contained, typename Focus>
-        std::list<Contained> apply(const std::list<Contained>& val, const std::function<Focus(Focus)>& variator) const
+        std::list<Contained> apply(std::list<Contained> container,
+                                   const std::function<Focus(Focus)>& variator) const
     {
-        auto container = val;
         for (auto it = container.begin(); it != container.end(); ++it)
         {
             *it = base.apply(*it, variator);

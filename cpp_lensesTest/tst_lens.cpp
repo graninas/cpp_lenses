@@ -1,12 +1,10 @@
 #include <QString>
 #include <QtTest>
 
-#include "../identity.h"
-#include "../lenses.h"
-#include "../fold.h"
-#include "../traversed.h"
-#include "../bind_combinator.h"
-#include "../to_combinator.h"
+#include <fold.h>
+#include <traversed.h>
+#include <bind_combinator.h>
+#include <to_combinator.h>
 
 #include "common.h"
 #include "address.h"
@@ -43,7 +41,6 @@ private Q_SLOTS:
     void traversed3LensTest();
     void viewCombinatorTest();
 
-    void toListCombinatorTest();
     void overCombinatorTest();
     void setCombinatorTest();
 
@@ -103,11 +100,15 @@ void LensTest::lensTest()
 
     std::function<int(int)> modifier = [](int old) { return old + 6; };
 
-    acc = set(streetLens, acc, std::string("Churchill's"));
-    acc = over(houseLens, acc, modifier);
+    Account newAcc1 = set(streetLens, acc, std::string("Churchill's"));
+    Account newAcc2 = over(houseLens, newAcc1, modifier);
 
-    QVERIFY(acc.person.address.house == 26);
-    QVERIFY(acc.person.address.street == "Churchill's");
+    QVERIFY(newAcc1.person.address.house == 20);
+    QVERIFY(newAcc1.person.address.street == "Churchill's");
+    QVERIFY(newAcc2.person.address.house == 26);
+    QVERIFY(newAcc2.person.address.street == "Churchill's");
+    QVERIFY(acc.person.address.house == 20);
+    QVERIFY(acc.person.address.street == "Brooklin");
 }
 
 void LensTest::bindLCombinatorTest()
@@ -220,23 +221,6 @@ void LensTest::viewCombinatorTest()
     QVERIFY(address.street == expectedAddr.street);
 }
 
-void LensTest::toListCombinatorTest()
-{
-    Car car1 = {"x555xx", "Ford Focus", 0, {}};
-    Car car2 = {"y555yy", "Toyota Corolla", 10000, {}};
-
-    std::vector<Car> cars = {car1, car2};
-
-    auto fC = foldedC<Car>();
-
-    auto zoomer = zoom_Fold_(fC, modelL());
-    std::list<std::string> result = toListOf(zoomer, cars);
-
-    QVERIFY(result.size() == 2);
-    QVERIFY(result.front() == "Ford Focus");
-    QVERIFY(result.back() == "Toyota Corolla");
-}
-
 void LensTest::overCombinatorTest()
 {
     auto zoomer = zoom(addressL(), houseL());
@@ -288,3 +272,4 @@ void LensTest::modifyValueInlineLensTest()
 QTEST_APPLESS_MAIN(LensTest)
 
 #include "tst_lens.moc"
+

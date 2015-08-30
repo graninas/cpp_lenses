@@ -4,17 +4,17 @@
 #
 #-------------------------------------------------
 
-QT       -= core gui
+QT -= core gui
 
-TARGET = lens
+TARGET = cpp_lenses
 TEMPLATE = lib
 CONFIG += staticlib
-CONFIG += c++14
+
+QMAKE_CXXFLAGS += -std=c++11
 
 SOURCES +=
 
 HEADERS += \
-    identity.h \
     lenses.h \
     autolens.h \
     fold.h \
@@ -25,6 +25,7 @@ HEADERS += \
     bind_combinator.h \
     to_combinator.h \
     traversed.h
+
 unix {
     target.path = /usr/lib
     INSTALLS += target
