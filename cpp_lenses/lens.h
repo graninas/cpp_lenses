@@ -7,7 +7,7 @@
 
 namespace lenses
 {
-using namespace f_core;
+using namespace fp;
 
 // TODO: a better generic lenses?
 //template <typename Value, typename Focus, template <typename> class Container = Identity>
