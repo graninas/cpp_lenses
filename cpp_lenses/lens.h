@@ -44,15 +44,15 @@ template <typename Value, typename Focus>
 }
 
 template <typename Focus>
-    bool isFocus(const Lens<Focus, Id>& l)
+    bool isFocus(const Lens<Focus, fp::Id>& l)
 {
     return true;
 }
 
 template <typename Focus>
-Lens<Focus, Id> idL()
+Lens<Focus, fp::Id> idL()
 {
-    Lens<Focus, Id> l;
+    Lens<Focus, fp::Id> l;
     return l;
 }
 
