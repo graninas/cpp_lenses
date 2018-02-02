@@ -100,7 +100,7 @@ void LensTest::lensTest()
 
     std::function<int(int)> modifier = [](int old) { return old + 6; };
 
-    Account newAcc1 = set(streetLens, acc, std::string("Churchill's"));
+    Account newAcc1 = lenses::set(streetLens, acc, std::string("Churchill's"));
     Account newAcc2 = over(houseLens, newAcc1, modifier);
 
     QVERIFY(newAcc1.person.address.house == 20);
@@ -126,7 +126,7 @@ void LensTest::genericStack1Test()
 {
     auto zoomer = bindL(personL(), addressL(), houseL());
 
-    Account acc = evalLens(zoomer, getAccount(), set(100));
+    Account acc = evalLens(zoomer, getAccount(), lenses::set(100));
 
     QVERIFY(acc.person.address.house == 100);
 }
@@ -134,7 +134,7 @@ void LensTest::genericStack1Test()
 void LensTest::genericStack2Test()
 {
     Person person = {"Name", "Surname", 10, Address(), {}};
-    Account account = set(personL(), getAccount(), person);
+    Account account = lenses::set(personL(), getAccount(), person);
 
     QVERIFY(account.person.name == "Name");
     QVERIFY(account.person.surname == "Surname");
@@ -145,7 +145,7 @@ void LensTest::rerollStackTest()
     LS<Lens<Account, Person>, Lens<Person, Address>> zoomer = bindL(personL(), addressL());
     LS<Lens<Account, Person>, Lens<Person, Address>, Lens<Address, int>> newZoomer = zoomer.reroll<Lens<Address, int>>(houseL());
 
-    Account acc = evalLens(newZoomer, getAccount(), set(100));
+    Account acc = evalLens(newZoomer, getAccount(), lenses::set(100));
     QVERIFY(acc.person.address.house == 100);
 }
 
@@ -156,9 +156,9 @@ void LensTest::toCombinatorTest()
     LS<Lens<Account, Person>, Lens<Person, Address>, Lens<Address, int>> zoomer2 = (personL() to addressL()) to houseL();
     LS<Lens<Account, Person>, Lens<Person, Address>, Lens<Address, int>> zoomer3 = personL() to addressL() to houseL();
 
-    Person pers  = set(zoomer1, getPerson(),  100);
-    Account acc1 = set(zoomer2, getAccount(), 100);
-    Account acc2 = set(zoomer3, getAccount(), 100);
+    Person pers  = lenses::set(zoomer1, getPerson(),  100);
+    Account acc1 = lenses::set(zoomer2, getAccount(), 100);
+    Account acc2 = lenses::set(zoomer3, getAccount(), 100);
 
     QVERIFY(pers.address.house == 100);
     QVERIFY(acc1.person.address.house == 100);
@@ -198,7 +198,7 @@ void LensTest::traversed3LensTest()
 {
     auto zoomer = carsL() to traversed<Car>() to accessoriesL() to traversed<std::string>();
 
-    Person p = set(zoomer, getPerson(), std::string("none"));
+    Person p = lenses::set(zoomer, getPerson(), std::string("none"));
 
     QVERIFY(p.cars.size() == 2);
     QVERIFY(p.cars[0].accessories.size() == 2);
@@ -236,7 +236,7 @@ void LensTest::setCombinatorTest()
 {
     auto zoomer = zoom(addressL(), houseL());
 
-    Person newPerson = set(zoomer, getPerson(), 100);
+    Person newPerson = lenses::set(zoomer, getPerson(), 100);
 
     QVERIFY(newPerson.address.house == 100);
 }
@@ -245,7 +245,7 @@ void LensTest::setValueImplicitLensTest()
 {
     auto zoomer = zoom(addressL(), houseL());
 
-    Person newPerson = evalLens(zoomer, getPerson(), set(100));
+    Person newPerson = evalLens(zoomer, getPerson(), lenses::set(100));
 
     QVERIFY(newPerson.address.house == 100);
 }
