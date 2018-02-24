@@ -12,7 +12,7 @@ namespace lenses
 template <typename Focus, typename LS, typename Value>
 Focus view(const LS& stack, const Value& value)
 {
-    return stack.get<Focus>(value);
+    return stack.template get<Focus>(value);
 }
 
 

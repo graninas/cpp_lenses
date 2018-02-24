@@ -68,7 +68,7 @@ struct LS<L1, Tail...> : LS<Tail...>
         Focus get(const Value& value) const
     {
         auto z2 = m_lens.getter(value);
-        return base.get<Focus>(z2);
+        return base.template get<Focus>(z2);
     }
 
     template <typename H1, typename Focus>

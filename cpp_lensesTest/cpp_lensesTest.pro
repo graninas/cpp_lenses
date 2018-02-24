@@ -11,7 +11,11 @@ TARGET = tst_lenstest
 CONFIG   += console
 CONFIG   -= app_bundle
 
-CONFIG += c++14
+CONFIG += c++1z
+QMAKE_CXXFLAGS += -nostdinc++
+
+INCLUDEPATH += /usr/include/x86_64-linux-gnu/c++/7
+INCLUDEPATH += /usr/include/c++/7
 
 TEMPLATE = app
 
