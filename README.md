@@ -11,7 +11,7 @@ Features:
 - `set`, `view`, `over` combinators.
 - Experimental not generic folding and `toListOf`, `toVectorOf` combinators.
 
-```
+```cpp
 struct Address
 {
     std::string city;
